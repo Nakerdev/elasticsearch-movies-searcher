@@ -1,14 +1,25 @@
 .container {
   min-height: 100px;
   width: 100%;
-  background-color: #12130F;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  z-index: 1;
 }
 
 .title {
   font-size: 2.8rem;
-  color: #EAE6E5;
+  color: white;
+}
+
+.github {
+  width: 50px;
+  height: 50px;
+}
+
+.popcorn {
+  width: 80px;
+  height: 80px;
 }
