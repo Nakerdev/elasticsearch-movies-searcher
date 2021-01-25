@@ -6,16 +6,10 @@
   margin-top: 20px;
 }
 
-.searchInput {
-  background: white;
-  outline: none;
-  font-size: 16px;
+.input {
+  font-size: 20px;
   line-height: 40px;
   width: 50%;
   padding-left: 10px;
-}
-
-.searchButton {
-  font-size: 16px;
-  height: 40px;
+  border-radius: 10px;
 }
