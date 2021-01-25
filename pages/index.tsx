@@ -9,8 +9,8 @@ export default function Home() {
             <Head>
                 <title>Home | ElasticMovies</title>
             </Head>
-            <main>
-              <Searcher></Searcher>
+            <main className={styles.background}>
+                <Searcher></Searcher>
             </main>
         </>
     );
