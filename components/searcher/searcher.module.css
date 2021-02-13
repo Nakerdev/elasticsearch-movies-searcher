@@ -13,3 +13,8 @@
   padding-left: 10px;
   border-radius: 10px;
 }
+
+.searchButton {
+  width: 30px;
+  margin-left: -40px;
+}
