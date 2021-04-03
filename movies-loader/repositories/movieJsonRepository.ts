@@ -11,9 +11,9 @@ export function movieJsonRepository() : movieRepository {
 
     function searchAll() : Movie[] {
 
-        return (<JsonMovieDto[]>movies).map(movie => buildMovie(movie));
+        return (<MovieDto[]>movies).map(movie => buildMovie(movie));
 
-        function buildMovie(movie: JsonMovieDto): Movie {
+        function buildMovie(movie: MovieDto): Movie {
             return new Movie(
                 movie.id,
                 movie.title,
@@ -30,7 +30,7 @@ export function movieJsonRepository() : movieRepository {
     }
 }
 
-class JsonMovieDto {
+class MovieDto {
 
     readonly id: string;
     readonly title: string;
