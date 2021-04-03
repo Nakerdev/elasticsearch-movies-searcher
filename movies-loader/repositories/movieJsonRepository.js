@@ -19,8 +19,8 @@ function movieJsonRepository() {
     }
 }
 exports.movieJsonRepository = movieJsonRepository;
-var JsonMovieDto = /** @class */ (function () {
-    function JsonMovieDto(id, title, poster, overview, release_date, genres) {
+var MovieDto = /** @class */ (function () {
+    function MovieDto(id, title, poster, overview, release_date, genres) {
         this.id = id;
         this.title = title;
         this.poster = poster;
@@ -28,5 +28,5 @@ var JsonMovieDto = /** @class */ (function () {
         this.release_date = release_date;
         this.genres = genres;
     }
-    return JsonMovieDto;
+    return MovieDto;
 }());

@@ -1,8 +1,9 @@
 import { movieRepository } from "./repositories/movieRepository";
 
 export function moviesLoader(
-    movieJsonRepository: movieRepository
+    movieJsonRepository: movieRepository,
+    movieElasticSearchRepository: movieRepository
 ) {
     const movies = movieJsonRepository.searchAll();
-    console.log(movies[0].id);
+    movieElasticSearchRepository.create(null);
 }
