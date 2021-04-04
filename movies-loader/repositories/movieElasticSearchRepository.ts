@@ -15,12 +15,12 @@ export function movieElasticSearchRepository() : movieRepository {
         throw new Error("not implemented");
     }
 
-    async function create(movie: Movie) {
+    async function create(movie: Movie) : Promise<void> {
         if(! await isMoviesIndexExist()) {
             await createMoviesIndex();
             return;
         };
-        throw new Error("not implemented");
+        await createMovieDocument(movie);
     }
 
     async function isMoviesIndexExist() : Promise<boolean> {
@@ -74,4 +74,48 @@ export function movieElasticSearchRepository() : movieRepository {
         };
         await fetch(`${elasticSearchHost}/${indexName}`, httpRequest);
     }
+
+    async function createMovieDocument(movie: Movie) : Promise<void> {
+        const document = new MovieDocumentDto(
+            movie.id,
+            movie.title,
+            movie.poster,
+            movie.synopsis,
+            movie.releaseDate,
+            movie.genres);
+        const httpRequest = { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(document)
+        };
+        await fetch(`${elasticSearchHost}/${indexName}/_doc`, httpRequest);
+    }
 }
+
+class MovieDocumentDto {
+
+        readonly id: string;
+        readonly title: string;
+        readonly poster: string;
+        readonly synopsis: string;
+        readonly release_date: number;
+        readonly genres: string[];
+
+        constructor(
+            id: string,
+            title: string,
+            poster: string,
+            synopsis: string,
+            release_date: number,
+            genres: string[]
+        ) {
+            this.id = id;
+            this.title = title;
+            this.poster = poster;
+            this.synopsis = synopsis;
+            this.release_date = release_date;
+            this.genres = genres;
+        }
+    }

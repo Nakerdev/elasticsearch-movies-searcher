@@ -61,7 +61,10 @@ function movieElasticSearchRepository() {
                         return [2 /*return*/];
                     case 3:
                         ;
-                        throw new Error("not implemented");
+                        return [4 /*yield*/, createMovieDocument(movie)];
+                    case 4:
+                        _a.sent();
+                        return [2 /*return*/];
                 }
             });
         });
@@ -134,5 +137,38 @@ function movieElasticSearchRepository() {
             });
         });
     }
+    function createMovieDocument(movie) {
+        return __awaiter(this, void 0, void 0, function () {
+            var document, httpRequest;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        document = new MovieDocumentDto(movie.id, movie.title, movie.poster, movie.synopsis, movie.releaseDate, movie.genres);
+                        httpRequest = {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(document)
+                        };
+                        return [4 /*yield*/, node_fetch_1["default"](elasticSearchHost + "/" + indexName + "/_doc", httpRequest)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    }
 }
 exports.movieElasticSearchRepository = movieElasticSearchRepository;
+var MovieDocumentDto = /** @class */ (function () {
+    function MovieDocumentDto(id, title, poster, synopsis, release_date, genres) {
+        this.id = id;
+        this.title = title;
+        this.poster = poster;
+        this.synopsis = synopsis;
+        this.release_date = release_date;
+        this.genres = genres;
+    }
+    return MovieDocumentDto;
+}());
