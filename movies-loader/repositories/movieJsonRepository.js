@@ -14,7 +14,7 @@ function movieJsonRepository() {
             return new movieRepository_1.Movie(movie.id, movie.title, movie.poster, movie.overview, movie.release_date, movie.genres);
         }
     }
-    function create(movie) {
+    function create(movies) {
         throw new Error("not implemented");
     }
 }

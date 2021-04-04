@@ -48,8 +48,9 @@ function movieElasticSearchRepository() {
     function searchAll() {
         throw new Error("not implemented");
     }
-    function create(movie) {
+    function create(movies) {
         return __awaiter(this, void 0, void 0, function () {
+            var _i, movies_1, movie;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, isMoviesIndexExist()];
@@ -58,13 +59,23 @@ function movieElasticSearchRepository() {
                         return [4 /*yield*/, createMoviesIndex()];
                     case 2:
                         _a.sent();
-                        return [2 /*return*/];
+                        _a.label = 3;
                     case 3:
                         ;
-                        return [4 /*yield*/, createMovieDocument(movie)];
+                        _i = 0, movies_1 = movies;
+                        _a.label = 4;
                     case 4:
+                        if (!(_i < movies_1.length)) return [3 /*break*/, 7];
+                        movie = movies_1[_i];
+                        console.log("Creating " + movie.title + " movie.");
+                        return [4 /*yield*/, createMovieDocument(movie)];
+                    case 5:
                         _a.sent();
-                        return [2 /*return*/];
+                        _a.label = 6;
+                    case 6:
+                        _i++;
+                        return [3 /*break*/, 4];
+                    case 7: return [2 /*return*/];
                 }
             });
         });

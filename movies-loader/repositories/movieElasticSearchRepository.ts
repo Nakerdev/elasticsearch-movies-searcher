@@ -15,12 +15,14 @@ export function movieElasticSearchRepository() : movieRepository {
         throw new Error("not implemented");
     }
 
-    async function create(movie: Movie) : Promise<void> {
+    async function create(movies: Movie[]) : Promise<void> {
         if(! await isMoviesIndexExist()) {
             await createMoviesIndex();
-            return;
         };
-        await createMovieDocument(movie);
+        for (const movie of movies) {
+            console.log(`Creating ${movie.title} movie.`);
+            await createMovieDocument(movie)
+        }
     }
 
     async function isMoviesIndexExist() : Promise<boolean> {

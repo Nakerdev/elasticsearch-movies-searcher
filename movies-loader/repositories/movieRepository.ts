@@ -5,7 +5,7 @@ export {
 
 interface movieRepository {
     searchAll: () => Movie[]
-    create: (movie: Movie) => void;
+    create: (movies: Movie[]) => void;
 }
 
 class Movie {

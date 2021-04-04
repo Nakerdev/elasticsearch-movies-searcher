@@ -5,5 +5,5 @@ export function moviesLoader(
     movieElasticSearchRepository: movieRepository
 ) {
     const movies = movieJsonRepository.searchAll();
-    movieElasticSearchRepository.create(movies[0]);
+    movieElasticSearchRepository.create(movies);
 }
