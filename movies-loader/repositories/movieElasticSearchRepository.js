@@ -54,29 +54,82 @@ function movieElasticSearchRepository() {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, isMoviesIndexExist()];
                     case 1:
-                        if (!(_a.sent())) {
-                            console.log("NO EXISTE!");
-                            return [2 /*return*/];
-                        }
-                        ;
-                        console.log("EXISTE!");
+                        if (!!(_a.sent())) return [3 /*break*/, 3];
+                        return [4 /*yield*/, createMoviesIndex()];
+                    case 2:
+                        _a.sent();
                         return [2 /*return*/];
+                    case 3:
+                        ;
+                        throw new Error("not implemented");
                 }
             });
         });
     }
     function isMoviesIndexExist() {
         return __awaiter(this, void 0, void 0, function () {
-            var httpRequest;
+            var success_status_code, httpRequest;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        httpRequest = {
-                            method: 'HEAD'
-                        };
+                        success_status_code = 200;
+                        httpRequest = { method: 'HEAD' };
                         return [4 /*yield*/, node_fetch_1["default"](elasticSearchHost + "/" + indexName, httpRequest)
-                                .then(function (response) { return response.status === 200; })["catch"](function (_) { return false; })];
+                                .then(function (response) { return response.status === success_status_code; })["catch"](function (_) { return false; })];
                     case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    }
+    function createMoviesIndex() {
+        return __awaiter(this, void 0, void 0, function () {
+            var indexConfiguration, httpRequest;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        indexConfiguration = {
+                            settings: {
+                                analysis: {
+                                    analyzer: {
+                                        "movies_title_analyzer": {
+                                            type: "custom",
+                                            tokenizer: "standard",
+                                            filter: [
+                                                "lowercase",
+                                                "stop",
+                                                "stemmer",
+                                                "asciifolding"
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            mappings: {
+                                dynamic: "strict",
+                                properties: {
+                                    id: { type: "keyword" },
+                                    title: {
+                                        type: "text",
+                                        analyzer: "movies_title_analyzer"
+                                    },
+                                    poster: { type: "text" },
+                                    synopsis: { type: "text" },
+                                    release_date: { type: "long" },
+                                    genres: { type: "keyword" }
+                                }
+                            }
+                        };
+                        httpRequest = {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(indexConfiguration)
+                        };
+                        return [4 /*yield*/, node_fetch_1["default"](elasticSearchHost + "/" + indexName, httpRequest)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
                 }
             });
         });

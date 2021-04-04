@@ -16,7 +16,7 @@ export function movieElasticSearchRepository() : movieRepository {
     }
 
     async function create(movie: Movie) {
-        if(!await isMoviesIndexExist()) {
+        if(! await isMoviesIndexExist()) {
             await createMoviesIndex();
             return;
         };
@@ -31,13 +31,14 @@ export function movieElasticSearchRepository() : movieRepository {
             .catch(_ => false);
     }
 
-    async function createMoviesIndex() {
+    async function createMoviesIndex() : Promise<void> {
         const indexConfiguration = {
             settings: {
                 analysis: {
                     analyzer: {
                         "movies_title_analyzer": {
                             type: "custom",
+                            tokenizer: "standard",
                             filter: [
                                 "lowercase",
                                 "stop",
@@ -58,14 +59,17 @@ export function movieElasticSearchRepository() : movieRepository {
                     },
                     poster: { type: "text" },
                     synopsis: { type: "text" },
-                    releaseDate: { type: "long" },
+                    release_date: { type: "long" },
                     genres: { type: "keyword" }
                 }
             }
 
         };
         const httpRequest = { 
-            method: 'PUT',
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(indexConfiguration)
         };
         await fetch(`${elasticSearchHost}/${indexName}`, httpRequest);
