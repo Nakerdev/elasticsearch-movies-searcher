@@ -7,7 +7,7 @@ export {
 }
 
 interface Index {
-    create: () => Promise<void>;
+    createIfNotExist: () => Promise<void>;
     indexDocument: (document: any) => Promise<void>;
 }
 
@@ -52,7 +52,7 @@ function moviesIndex(elasticSearchHost: string) : Index {
         indexDocument
     }
 
-    async function create() : Promise<void> {
+    async function createIfNotExist() : Promise<void> {
 
         if(! await isIndexExist()) {
             await createIndex();
