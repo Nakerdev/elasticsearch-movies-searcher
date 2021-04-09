@@ -5,7 +5,7 @@ export function movieElasticSearchRepository(
     moviesIndex: Index
 ) : movieRepository {
 
-    moviesIndex.create();
+    moviesIndex.createIfNotExist();
 
     return {
         searchAll,
