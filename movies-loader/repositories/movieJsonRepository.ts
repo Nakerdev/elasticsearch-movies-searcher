@@ -25,7 +25,7 @@ export function movieJsonRepository() : movieRepository {
         }
     }
 
-    function create(movies: Movie[]) : void {
+    function create() : void {
         throw new Error("not implemented");
     }
 }
