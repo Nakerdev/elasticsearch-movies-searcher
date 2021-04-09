@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "populate-db": "tsc --resolveJsonModule ./movies-loader/runner.ts && node ./movies-loader/runner.js"
+    "compile-loader": "tsc --resolveJsonModule --outDir ./dist ./movies-loader/runner.ts",
+    "sync-movies": "npm run compile-loader && node ./dist/movies-loader/runner.js"
   },
   "dependencies": {
     "next": "10.0.5",
