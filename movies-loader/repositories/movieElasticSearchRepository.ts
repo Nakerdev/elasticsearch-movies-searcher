@@ -1,6 +1,5 @@
 import { movieRepository, Movie } from "./movieRepository";
 import { Index, moviesIndex, MovieDocument } from "./moviesIndex";
-import fetch from "node-fetch";
 
 export function movieElasticSearchRepository(
     moviesIndex: Index
