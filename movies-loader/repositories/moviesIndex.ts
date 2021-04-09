@@ -48,7 +48,7 @@ function moviesIndex(elasticSearchHost: string) : Index {
     };
 
     return {
-        create,
+        createIfNotExist,
         indexDocument
     }
 
