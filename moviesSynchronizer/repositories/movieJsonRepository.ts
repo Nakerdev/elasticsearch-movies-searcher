@@ -1,6 +1,6 @@
 import { movieRepository, Movie } from "./movieRepository";
 
-import * as movies from "./../../movies-source/movies.json";
+import * as movies from "./data/movies.json";
 
 export function movieJsonRepository() : movieRepository {
 
