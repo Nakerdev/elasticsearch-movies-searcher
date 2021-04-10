@@ -2,9 +2,7 @@ import { moviesLoader } from "./movies-loader";
 import { movieJsonRepository } from "./repositories/movieJsonRepository";
 import { movieElasticSearchRepository } from "./repositories/movieElasticSearchRepository";
 import { moviesIndex } from "./repositories/moviesIndex";
-
-import * as dotenv from "dotenv";
-dotenv.config();
+import appConfig from "./../app.config";
 
 function runLoader() {
     moviesLoader(
@@ -12,8 +10,8 @@ function runLoader() {
         buildMovieElasticSearchRepository());
 
     function buildMovieElasticSearchRepository() {
-        const elasticSearchHost = process.env.ELASTICSEARCH_HOST;
-        return movieElasticSearchRepository(moviesIndex(elasticSearchHost));
+        return movieElasticSearchRepository(
+            moviesIndex(appConfig.ElasticSearchHost));
     }
 }
 
