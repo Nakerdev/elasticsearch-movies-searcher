@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-        "clean": "rm -rf ./dist 2>&1",
+    "clean": "rm -rf ./dist 2>&1",
     "compile-synchronizer": "tsc --resolveJsonModule --outDir ./dist ./moviesSynchronizer/runner.ts",
     "sync-movies": "npm run clean && npm run compile-synchronizer && node ./dist/moviesSynchronizer/runner.js"
   },

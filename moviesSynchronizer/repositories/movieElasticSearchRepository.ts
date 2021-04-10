@@ -18,6 +18,7 @@ export function movieElasticSearchRepository(
 
     async function create(movies: Movie[]) : Promise<void> {
         for (const movie of movies) {
+            console.log(`Indexing movie: ${movie.title}`);
             const document = new MovieDocument(
                 movie.id,
                 movie.title,
