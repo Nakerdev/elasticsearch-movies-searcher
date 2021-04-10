@@ -11,7 +11,7 @@ It is developed using NextJs, TypeScript and ElasticSearch.
 
 - Install dependencies ```npm install```.
 - Run ```docker-compose up``` to up the ElasticSearch container.
-- Run ```npm run sync-movies``` to populate the ElasticSearch DB with the movies.
+- Run ```npm run sync-movies``` to populate the ElasticSearch DB with the movies. **This process takes 2 or 3 minutes to finish.**
 - Run ```npm run dev``` to up the webapp and open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Synchronization improvements
