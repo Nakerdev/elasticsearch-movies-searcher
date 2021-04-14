@@ -15,7 +15,7 @@ class Movie {
     readonly poster: string;
     readonly synopsis: string;
     readonly releaseDate: number;
-    readonly genres: string[]
+    readonly genres: string[];
 
     constructor(
         id: string,
