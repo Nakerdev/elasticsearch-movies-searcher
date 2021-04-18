@@ -5,6 +5,7 @@ export { Index, moviesIndex, MovieDocument };
 interface Index {
   createIfNotExist: () => Promise<void>;
   indexDocument: (document: any) => Promise<void>;
+  searchBy: (title: string) => Promise<MovieDocument[]>;
 }
 
 function moviesIndex(elasticSearchHost: string): Index {
@@ -40,6 +41,7 @@ function moviesIndex(elasticSearchHost: string): Index {
   return {
     createIfNotExist,
     indexDocument,
+    searchBy,
   };
 
   async function createIfNotExist(): Promise<void> {
@@ -76,6 +78,19 @@ function moviesIndex(elasticSearchHost: string): Index {
       body: JSON.stringify(document),
     };
     await fetch(`${elasticSearchHost}/${indexName}/_doc`, httpRequest);
+  }
+
+  async function searchBy(title: string): Promise<MovieDocument[]> {
+    const httpRequest = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    await fetch(
+      `${elasticSearchHost}/${indexName}/_search?q=title:${title}`,
+      httpRequest
+    );
   }
 }
 

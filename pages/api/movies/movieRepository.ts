@@ -1,14 +1,15 @@
+import { Index } from "./../../../moviesSynchronizer/repositories/moviesIndex";
+
 export { MovieRepository, movieElasticSearchRepository };
 
-function movieElasticSearchRepository(moviesIndex): MovieRepository {
+function movieElasticSearchRepository(moviesIndex: Index): MovieRepository {
   return {
     searchBy,
   };
 
-  function searchBy(criteria: string): Movie[] {
-    return moviesIndex
-      .searchBy(criteria)
-      .map((document) => buildMovie(document));
+  async function searchBy(criteria: string): Promise<Movie[]> {
+    const foundDocuments = await moviesIndex.searchBy(criteria);
+    return foundDocuments.map((document) => buildMovie(document));
 
     function buildMovie(document: MovieDocument): Movie {
       return new Movie(
