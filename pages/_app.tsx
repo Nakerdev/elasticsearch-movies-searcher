@@ -1,6 +1,6 @@
 import { Header } from "../components/header/index";
 
-import '../styles/globals.css'
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }) {
       <Header></Header>
       <Component {...pageProps} />
     </>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

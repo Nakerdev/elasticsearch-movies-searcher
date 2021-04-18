@@ -1,1 +1,6 @@
 dist
+.git
+.next
+node_modules/
+public/
+styles/

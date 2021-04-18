@@ -21,7 +21,8 @@ interface ApiResponseBuilder {
     sendSuccessResponse(responseBody: ResponseBody): void;
 }
 
-function NextApiResponseBuilder(res: NextApiResponse) : ApiResponseBuilder {
+function NextApiResponseBuilder(
+    res: NextApiResponse) : ApiResponseBuilder {
     
     return {
         sendSuccessResponse
