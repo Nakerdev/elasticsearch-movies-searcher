@@ -1,48 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
-
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { method } = req;
-  switch (method) {
-    case "GET":
-      console.log("execute the controller");
-      break;
-    default:
-      res.setHeader("Allow", ["GET"]);
-      res.status(405).end(`Method ${method} Not Allowed`);
-  }
-}
-
-type ResponseBody = object | string;
-
-interface ApiResponseBuilder {
-  sendSuccessResponse(responseBody: ResponseBody): void;
-}
-
-function NextApiResponseBuilder(res: NextApiResponse): ApiResponseBuilder {
-  return {
-    sendSuccessResponse,
-  };
-
-  function sendSuccessResponse(responseBody: ResponseBody): void {
-    res.send(200).json(responseBody);
-  }
-}
-
-function moviesController(
-  request: MoviesRequest,
-  apiResponseBuilder: ApiResponseBuilder,
-  movieRepository: MovieRepository
-) {
-  throw new Error("not implemented");
-}
-
-class MoviesControllerRequest {
-  readonly criteria: string;
-
-  constructor(criteria: string) {
-    this.criteria = criteria;
-  }
-}
+export { MovieRepository, movieElasticSearchRepository };
 
 function movieElasticSearchRepository(moviesIndex): MovieRepository {
   return {
