@@ -87,10 +87,12 @@ function moviesIndex(elasticSearchHost: string): Index {
         "Content-Type": "application/json",
       },
     };
-    await fetch(
+    const response = await fetch(
       `${elasticSearchHost}/${indexName}/_search?q=title:${title}`,
       httpRequest
     );
+    const jsonResponse = await response.json();
+    return <MovieDocument[]>jsonResponse.hits.hits;
   }
 }
 

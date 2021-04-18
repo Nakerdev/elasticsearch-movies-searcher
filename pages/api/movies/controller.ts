@@ -15,8 +15,8 @@ function moviesController(
     search,
   };
 
-  function search(request: MoviesRequest) {
-    const foundMovies = movieRepository.searchBy(request.criteria);
+  async function search(request: MoviesRequest) {
+    const foundMovies = await movieRepository.searchBy(request.criteria);
     apiResponseBuilder.sendSuccessResponse(foundMovies);
   }
 }
