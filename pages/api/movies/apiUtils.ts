@@ -14,6 +14,6 @@ function nextApiResponseBuilder(res: NextApiResponse): ApiResponseBuilder {
   };
 
   function sendSuccessResponse(responseBody: ResponseBody): void {
-    res.send(200).json(responseBody);
+    res.status(200).json(responseBody);
   }
 }
