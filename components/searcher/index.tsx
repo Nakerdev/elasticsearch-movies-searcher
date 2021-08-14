@@ -1,35 +1,75 @@
-import styles from "./searcher.module.css";
-import { Children } from "react";
+    import styles from "./searcher.module.css";
+    import { Children, Component } from "react";
+    import {Movie} from "./../../pages/api/movies/movieRepository";
 
-export const Searcher = () => {
-  return (
-    <section className={styles.container}>
-      <form className={styles.searcherContainer}>
-        <input
-          type="text"
-          className={styles.searchInput}
-          placeholder="The Movie name"
-        />
-        <input
-          type="image"
-          className={styles.searchButton}
-          src="/search.svg"
-          alt="a magnifying glass"
-        />
-      </form>
-      <div className={styles.moviesSearchingResultContainer}>
-        <SearchingResult movieTitle="HangOver"></SearchingResult>
-        <SearchingResult movieTitle="Harry Potter"></SearchingResult>
-        <SearchingResult movieTitle="The Terminal"></SearchingResult>
-      </div>
-    </section>
-  );
+    interface SearcherComponentState {
+        movies: Movie[];
+    }
+
+    export class Searcher extends Component<{}, SearcherComponentState> {
+
+      constructor(){
+        super({});
+        this.state = {
+            movies: []
+        };
+      }
+
+      async moviesSearchingCriteriaChangedEvent(event: React.ChangeEvent<HTMLInputElement>) {
+        const minCriteriaLenghtToFireTheSearch = 3;
+        const moviesSearchingCriteria = event.target.value;
+        if(moviesSearchingCriteria.length >= minCriteriaLenghtToFireTheSearch){
+          const response = await fetch(`/api/movies?criteria=${moviesSearchingCriteria}`);
+          const jsonResponse = await response.json()
+          if(jsonResponse.length === 0) return;
+          const movies = jsonResponse.map(movie => Object.assign(new Movie(), movie));
+          this.setState({movies: movies});
+        }
+      }
+
+  render() {
+      return (
+      <section className={styles.container}>
+        <form className={styles.searcherContainer} onSubmit={e => { e.preventDefault(); }}>
+          <input
+            type="text"
+            className={styles.searchInput}
+            placeholder="The Movie name"
+            onChange={event => this.moviesSearchingCriteriaChangedEvent(event)}
+          />
+          <input
+            type="image"
+            className={styles.searchButton}
+            src="/search.svg"
+            alt="a magnifying glass"
+          />
+        </form>
+        {
+            this.state.movies.length > 0 ? <MoviesList movies={this.state.movies}/> : ""
+        }
+      </section>
+    )
+  };
 };
 
-type SearchingResult = {
+type MoviesListProps = {
+    movies: Movie[];
+}
+
+const MoviesList = ({ movies }: MoviesListProps) => {
+  return (
+    <div className={styles.moviesSearchingResultContainer}>
+      {
+        movies.map((movie, index) => <MovieItem key={index} movieTitle={movie.title}></MovieItem>)
+      }
+    </div>
+  )
+};
+
+type MovieItemProps = {
   movieTitle: string;
 };
 
-const SearchingResult = ({ movieTitle }: SearchingResult) => {
+const MovieItem = ({ movieTitle }: MovieItemProps) => {
   return <button className={styles.searchingResult}>{movieTitle}</button>;
 };

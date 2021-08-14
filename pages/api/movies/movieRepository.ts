@@ -29,7 +29,7 @@ export function movieElasticSearchRepository(
   }
 }
 
-class Movie {
+export class Movie {
   readonly id: string;
   readonly title: string;
   readonly poster: string;
