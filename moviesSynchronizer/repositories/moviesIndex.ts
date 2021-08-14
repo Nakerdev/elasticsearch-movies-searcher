@@ -98,9 +98,9 @@ function moviesIndex(elasticSearchHost: string): Index {
 }
 
 class MovieDocument {
-  readonly _source: MovieDocument[];
+  readonly _source: MovieDocumentSource;
 
-  constructor(_source: MovieDocument[]) {
+  constructor(_source: MovieDocumentSource) {
     this._source = _source;
   }
 }
