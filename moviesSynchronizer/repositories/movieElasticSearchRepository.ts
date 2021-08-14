@@ -1,5 +1,5 @@
 import { movieRepository, Movie } from "./movieRepository";
-import { Index, moviesIndex, MovieDocument } from "./moviesIndex";
+import { Index, moviesIndex, MovieDocumentSource } from "./moviesIndex";
 
 export function movieElasticSearchRepository(
   moviesIndex: Index
@@ -18,7 +18,7 @@ export function movieElasticSearchRepository(
   async function create(movies: Movie[]): Promise<void> {
     for (const movie of movies) {
       console.log(`Indexing movie: ${movie.title}`);
-      const document = new MovieDocument(
+      const document = new MovieDocumentSource(
         movie.id,
         movie.title,
         movie.poster,

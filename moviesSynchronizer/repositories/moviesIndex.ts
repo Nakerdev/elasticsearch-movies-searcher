@@ -1,11 +1,11 @@
 import fetch from "node-fetch";
 
-export { Index, moviesIndex, MovieDocument };
+export { Index, moviesIndex, MovieDocumentSource };
 
 interface Index {
   createIfNotExist: () => Promise<void>;
   indexDocument: (document: any) => Promise<void>;
-  searchBy: (title: string) => Promise<MovieDocument[]>;
+  searchBy: (title: string) => Promise<MovieDocumentSource[]>;
 }
 
 function moviesIndex(elasticSearchHost: string): Index {
@@ -69,7 +69,7 @@ function moviesIndex(elasticSearchHost: string): Index {
     }
   }
 
-  async function indexDocument(document: MovieDocument): Promise<void> {
+  async function indexDocument(document: MovieDocumentSource): Promise<void> {
     const httpRequest = {
       method: "POST",
       headers: {
@@ -80,7 +80,7 @@ function moviesIndex(elasticSearchHost: string): Index {
     await fetch(`${elasticSearchHost}/${indexName}/_doc`, httpRequest);
   }
 
-  async function searchBy(title: string): Promise<MovieDocument[]> {
+  async function searchBy(title: string): Promise<MovieDocumentSource[]> {
     const httpRequest = {
       method: "GET",
       headers: {
@@ -92,11 +92,20 @@ function moviesIndex(elasticSearchHost: string): Index {
       httpRequest
     );
     const jsonResponse = await response.json();
-    return <MovieDocument[]>jsonResponse.hits.hits;
+    const movies = <MovieDocument[]>jsonResponse.hits.hits;
+    return movies.map((movie) => movie._source);
   }
 }
 
 class MovieDocument {
+  readonly _source: MovieDocument[];
+
+  constructor(_source: MovieDocument[]) {
+    this._source = _source;
+  }
+}
+
+class MovieDocumentSource {
   readonly id: string;
   readonly title: string;
   readonly poster: string;
