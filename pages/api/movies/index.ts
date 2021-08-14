@@ -6,7 +6,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
   switch (method) {
     case "GET":
-      const { criteria } = req.query;
+      const criteria = extractCriteriaParamFrom(req);
       const controller = buildMoviesController(res);
       const moviesRequest = new MoviesControllerRequest(criteria);
       controller.search(moviesRequest);
@@ -16,3 +16,8 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 };
+
+function extractCriteriaParamFrom(req: NextApiRequest) {
+  const { criteria } = req.query;
+  return Array.isArray(criteria) ? "" : criteria;
+}

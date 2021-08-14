@@ -1,8 +1,9 @@
+import { AppProps } from "next/app";
 import { Header } from "../components/header/index";
 
 import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Header></Header>

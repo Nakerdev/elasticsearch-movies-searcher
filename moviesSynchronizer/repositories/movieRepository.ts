@@ -1,11 +1,9 @@
-export { movieRepository, Movie };
-
-interface movieRepository {
+export interface movieRepository {
   searchAll: () => Movie[];
   create: (movies: Movie[]) => void;
 }
 
-class Movie {
+export class Movie {
   readonly id: string;
   readonly title: string;
   readonly poster: string;

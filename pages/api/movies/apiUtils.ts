@@ -1,14 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-export { ApiResponseBuilder, ResponseBody, nextApiResponseBuilder };
+export type ResponseBody = object | string | Array<object>;
 
-type ResponseBody = object | string | Array<object>;
-
-interface ApiResponseBuilder {
+export interface ApiResponseBuilder {
   sendSuccessResponse(responseBody: ResponseBody): void;
 }
 
-function nextApiResponseBuilder(res: NextApiResponse): ApiResponseBuilder {
+export function nextApiResponseBuilder(
+  res: NextApiResponse
+): ApiResponseBuilder {
   return {
     sendSuccessResponse,
   };

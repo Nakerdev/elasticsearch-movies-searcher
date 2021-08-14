@@ -1,12 +1,10 @@
-export { MoviesIndex, MovieDocument, MovieDocumentSource };
-
-interface MoviesIndex {
+export interface MoviesIndex {
   createIfNotExist: () => Promise<void>;
   indexDocument: (document: MovieDocumentSource) => Promise<void>;
   searchBy: (title: string) => Promise<MovieDocumentSource[]>;
 }
 
-class MovieDocument {
+export class MovieDocument {
   readonly _source: MovieDocumentSource;
 
   constructor(_source: MovieDocumentSource) {
@@ -14,7 +12,7 @@ class MovieDocument {
   }
 }
 
-class MovieDocumentSource {
+export class MovieDocumentSource {
   readonly id: string;
   readonly title: string;
   readonly poster: string;

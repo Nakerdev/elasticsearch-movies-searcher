@@ -1,8 +1,11 @@
 import { MoviesIndex } from "./../../../elasticSearchContext/indexes/movies/moviesIndex";
+import { MovieDocumentSource } from "./../../../elasticSearchContext/indexes/movies/moviesIndex";
 
-export { MovieRepository, movieElasticSearchRepository };
+export interface MovieRepository {
+  searchBy(criteria: string): Promise<Movie[]>;
+}
 
-function movieElasticSearchRepository(
+export function movieElasticSearchRepository(
   moviesIndex: MoviesIndex
 ): MovieRepository {
   return {
@@ -13,7 +16,7 @@ function movieElasticSearchRepository(
     const foundDocuments = await moviesIndex.searchBy(criteria);
     return foundDocuments.map((document) => buildMovie(document));
 
-    function buildMovie(document: MovieDocument): Movie {
+    function buildMovie(document: MovieDocumentSource): Movie {
       return new Movie(
         document.id,
         document.title,
@@ -24,10 +27,6 @@ function movieElasticSearchRepository(
       );
     }
   }
-}
-
-interface MovieRepository {
-  searchBy(criteria: string): Movie[];
 }
 
 class Movie {

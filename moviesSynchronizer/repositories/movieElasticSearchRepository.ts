@@ -1,8 +1,6 @@
 import { movieRepository, Movie } from "./movieRepository";
-import {
-  MoviesIndex,
-  MovieDocumentSource,
-} from "./../../elasticSearchContext/indexes/movies/moviesIndex";
+import type { MoviesIndex } from "./../../elasticSearchContext/indexes/movies/moviesIndex";
+import { MovieDocumentSource } from "./../../elasticSearchContext/indexes/movies/moviesIndex";
 
 export function movieElasticSearchRepository(
   moviesIndex: MoviesIndex

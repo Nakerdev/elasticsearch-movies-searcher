@@ -1,13 +1,11 @@
 import { ApiResponseBuilder } from "./apiUtils";
 import { MovieRepository } from "./movieRepository";
 
-export { MoviesController, MoviesControllerRequest, moviesController };
-
-interface MoviesController {
-  search(request: MoviesRequest): void;
+export interface MoviesController {
+  search(request: MoviesControllerRequest): void;
 }
 
-function moviesController(
+export function moviesController(
   apiResponseBuilder: ApiResponseBuilder,
   movieRepository: MovieRepository
 ): MoviesController {
@@ -15,13 +13,13 @@ function moviesController(
     search,
   };
 
-  async function search(request: MoviesRequest) {
+  async function search(request: MoviesControllerRequest) {
     const foundMovies = await movieRepository.searchBy(request.criteria);
     apiResponseBuilder.sendSuccessResponse(foundMovies);
   }
 }
 
-class MoviesControllerRequest {
+export class MoviesControllerRequest {
   readonly criteria: string;
 
   constructor(criteria: string) {

@@ -12,7 +12,7 @@ export function buildMoviesSynchronizer() {
 
   function buildMovieElasticSearchRepository() {
     return movieElasticSearchRepository(
-      moviesNodeFetchIndex(appConfig.ElasticSearchHost)
+      moviesNodeFetchIndex(appConfig.elasticSearchHost)
     );
   }
 }

@@ -16,7 +16,7 @@ export function buildMoviesController(res: NextApiResponse): MoviesController {
 
   function buildElasticSearchRepository(): MovieRepository {
     return movieElasticSearchRepository(
-      moviesNodeFetchIndex(appConfig.ElasticSearchHost)
+      moviesNodeFetchIndex(appConfig.elasticSearchHost)
     );
   }
 }
