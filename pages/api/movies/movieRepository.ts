@@ -1,8 +1,10 @@
-import { Index } from "./../../../moviesSynchronizer/repositories/moviesIndex";
+import { MoviesIndex } from "./../../../elasticSearchContext/indexes/movies/moviesIndex";
 
 export { MovieRepository, movieElasticSearchRepository };
 
-function movieElasticSearchRepository(moviesIndex: Index): MovieRepository {
+function movieElasticSearchRepository(
+  moviesIndex: MoviesIndex
+): MovieRepository {
   return {
     searchBy,
   };

@@ -1,8 +1,11 @@
 import { movieRepository, Movie } from "./movieRepository";
-import { Index, moviesIndex, MovieDocumentSource } from "./moviesIndex";
+import {
+  MoviesIndex,
+  MovieDocumentSource,
+} from "./../../elasticSearchContext/indexes/movies/moviesIndex";
 
 export function movieElasticSearchRepository(
-  moviesIndex: Index
+  moviesIndex: MoviesIndex
 ): movieRepository {
   moviesIndex.createIfNotExist();
 
@@ -12,6 +15,7 @@ export function movieElasticSearchRepository(
   };
 
   function searchAll(): Movie[] {
+    //this method is not using.
     throw new Error("not implemented");
   }
 

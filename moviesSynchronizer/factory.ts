@@ -1,7 +1,7 @@
 import { moviesSynchronizer } from "./moviesSynchronizer";
 import { movieJsonRepository } from "./repositories/movieJsonRepository";
 import { movieElasticSearchRepository } from "./repositories/movieElasticSearchRepository";
-import { moviesIndex } from "./repositories/moviesIndex";
+import moviesNodeFetchIndex from "./../elasticSearchContext/indexes/movies/moviesNodeFetchIndex";
 import appConfig from "./../app.config";
 
 export function buildMoviesSynchronizer() {
@@ -12,7 +12,7 @@ export function buildMoviesSynchronizer() {
 
   function buildMovieElasticSearchRepository() {
     return movieElasticSearchRepository(
-      moviesIndex(appConfig.ElasticSearchHost)
+      moviesNodeFetchIndex(appConfig.ElasticSearchHost)
     );
   }
 }

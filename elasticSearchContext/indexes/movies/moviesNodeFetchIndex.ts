@@ -1,42 +1,12 @@
 import fetch from "node-fetch";
+import { MoviesIndex, MovieDocument, MovieDocumentSource } from "./moviesIndex";
+import moviesIndexConfig from "./moviesIndexConfig";
 
-export { Index, moviesIndex, MovieDocumentSource };
-
-interface Index {
-  createIfNotExist: () => Promise<void>;
-  indexDocument: (document: any) => Promise<void>;
-  searchBy: (title: string) => Promise<MovieDocumentSource[]>;
-}
-
-function moviesIndex(elasticSearchHost: string): Index {
-  const indexName = "movies";
-  const indexConfiguration = {
-    settings: {
-      analysis: {
-        analyzer: {
-          movies_title_analyzer: {
-            type: "custom",
-            tokenizer: "standard",
-            filter: ["lowercase", "stop", "stemmer", "asciifolding"],
-          },
-        },
-      },
-    },
-    mappings: {
-      dynamic: "strict",
-      properties: {
-        id: { type: "keyword" },
-        title: {
-          type: "text",
-          analyzer: "movies_title_analyzer",
-        },
-        poster: { type: "text" },
-        synopsis: { type: "text" },
-        release_date: { type: "long" },
-        genres: { type: "keyword" },
-      },
-    },
-  };
+export default function moviesNodeFetchIndex(
+  elasticSearchHost: string
+): MoviesIndex {
+  const indexName = moviesIndexConfig.name;
+  const indexConfiguration = moviesIndexConfig.configuration;
 
   return {
     createIfNotExist,
@@ -94,38 +64,5 @@ function moviesIndex(elasticSearchHost: string): Index {
     const jsonResponse = await response.json();
     const movies = <MovieDocument[]>jsonResponse.hits.hits;
     return movies.map((movie) => movie._source);
-  }
-}
-
-class MovieDocument {
-  readonly _source: MovieDocumentSource;
-
-  constructor(_source: MovieDocumentSource) {
-    this._source = _source;
-  }
-}
-
-class MovieDocumentSource {
-  readonly id: string;
-  readonly title: string;
-  readonly poster: string;
-  readonly synopsis: string;
-  readonly release_date: number;
-  readonly genres: string[];
-
-  constructor(
-    id: string,
-    title: string,
-    poster: string,
-    synopsis: string,
-    release_date: number,
-    genres: string[]
-  ) {
-    this.id = id;
-    this.title = title;
-    this.poster = poster;
-    this.synopsis = synopsis;
-    this.release_date = release_date;
-    this.genres = genres;
   }
 }

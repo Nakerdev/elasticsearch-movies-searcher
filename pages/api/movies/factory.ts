@@ -5,7 +5,7 @@ import {
   movieElasticSearchRepository,
   MovieRepository,
 } from "./movieRepository";
-import { moviesIndex } from "./../../../moviesSynchronizer/repositories/moviesIndex";
+import moviesNodeFetchIndex from "./../../../elasticSearchContext/indexes/movies/moviesNodeFetchIndex";
 import appConfig from "./../../../app.config";
 
 export function buildMoviesController(res: NextApiResponse): MoviesController {
@@ -16,7 +16,7 @@ export function buildMoviesController(res: NextApiResponse): MoviesController {
 
   function buildElasticSearchRepository(): MovieRepository {
     return movieElasticSearchRepository(
-      moviesIndex(appConfig.ElasticSearchHost)
+      moviesNodeFetchIndex(appConfig.ElasticSearchHost)
     );
   }
 }
