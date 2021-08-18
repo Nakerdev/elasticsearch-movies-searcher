@@ -12,6 +12,7 @@ export default function moviesNodeFetchIndex(
     createIfNotExist,
     indexDocument,
     searchBy,
+    deleteAll,
   };
 
   async function createIfNotExist(): Promise<void> {
@@ -64,5 +65,11 @@ export default function moviesNodeFetchIndex(
     const jsonResponse = await response.json();
     const movies = <MovieDocument[]>jsonResponse.hits.hits;
     return movies.map((movie) => movie._source);
+  }
+
+  async function deleteAll() {
+    const httpRequest = { method: "DELETE" };
+    await fetch(`${elasticSearchHost}/${indexName}`, httpRequest);
+    console.log("Index deleted");
   }
 }

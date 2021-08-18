@@ -8,7 +8,9 @@ export function moviesSynchronizer(
     sync,
   };
 
-  function sync() {
+  async function sync() {
+    console.log("Cleaning the ElasticSearch movies index");
+    await movieElasticSearchRepository.deleteAll();
     const movies = movieJsonRepository.searchAll();
     movieElasticSearchRepository.create(movies);
   }

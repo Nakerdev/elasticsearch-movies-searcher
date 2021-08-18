@@ -4,6 +4,7 @@ import * as movies from "./data/movies.json";
 
 export function movieJsonRepository(): movieRepository {
   return {
+    deleteAll,
     searchAll,
     create,
   };
@@ -24,6 +25,12 @@ export function movieJsonRepository(): movieRepository {
   }
 
   function create(): void {
+    //this funtion is not using
+    throw new Error("not implemented");
+  }
+
+  function deleteAll() {
+    //this function is not using.
     throw new Error("not implemented");
   }
 }

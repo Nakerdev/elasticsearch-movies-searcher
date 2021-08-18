@@ -1,4 +1,5 @@
 export interface movieRepository {
+  deleteAll: () => void;
   searchAll: () => Movie[];
   create: (movies: Movie[]) => void;
 }

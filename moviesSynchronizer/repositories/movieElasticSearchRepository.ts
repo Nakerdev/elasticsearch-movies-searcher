@@ -5,12 +5,15 @@ import { MovieDocumentSource } from "./../../elasticSearchContext/indexes/movies
 export function movieElasticSearchRepository(
   moviesIndex: MoviesIndex
 ): movieRepository {
-  moviesIndex.createIfNotExist();
-
   return {
+    deleteAll,
     searchAll,
     create,
   };
+
+  async function deleteAll() {
+    await moviesIndex.deleteAll();
+  }
 
   function searchAll(): Movie[] {
     //this method is not using.
@@ -18,6 +21,7 @@ export function movieElasticSearchRepository(
   }
 
   async function create(movies: Movie[]): Promise<void> {
+    moviesIndex.createIfNotExist();
     for (const movie of movies) {
       console.log(`Indexing movie: ${movie.title}`);
       const document = new MovieDocumentSource(

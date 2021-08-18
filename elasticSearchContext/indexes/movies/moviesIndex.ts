@@ -2,6 +2,7 @@ export interface MoviesIndex {
   createIfNotExist: () => Promise<void>;
   indexDocument: (document: MovieDocumentSource) => Promise<void>;
   searchBy: (title: string) => Promise<MovieDocumentSource[]>;
+  deleteAll: () => void;
 }
 
 export class MovieDocument {
