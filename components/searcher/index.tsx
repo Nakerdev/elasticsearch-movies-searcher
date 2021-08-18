@@ -1,5 +1,6 @@
 import styles from "./searcher.module.css";
 import { Children, Component } from "react";
+import ReactDOM from "react-dom";
 import { Movie } from "./../../pages/api/movies/movieRepository";
 
 interface SearcherComponentState {
@@ -68,16 +69,46 @@ const MoviesList = ({ movies }: MoviesListProps) => {
   return (
     <div className={styles.moviesSearchingResultContainer}>
       {movies.map((movie, index) => (
-        <MovieItem key={index} movieTitle={movie.title}></MovieItem>
+        <MovieItem key={index} movie={movie}></MovieItem>
       ))}
     </div>
   );
 };
 
 type MovieItemProps = {
-  movieTitle: string;
+  movie: Movie;
 };
 
-const MovieItem = ({ movieTitle }: MovieItemProps) => {
-  return <button className={styles.searchingResult}>{movieTitle}</button>;
+const MovieItem = ({ movie }: MovieItemProps) => {
+  function showMovieCardModal() {
+    const modalRoot = document.getElementById("modal-root");
+    ReactDOM.render(<MovieCard movie={movie} />, modalRoot);
+  }
+  return (
+    <button
+      className={styles.searchingResult}
+      onClick={() => showMovieCardModal()}
+    >
+      {movie.title}
+    </button>
+  );
+};
+
+type MovieCardProps = {
+  movie: Movie;
+};
+
+const MovieCard = ({ movie }: MovieCardProps) => {
+  return (
+    <article>
+      <img src={movie.poster} alt={movie.title} />
+      <p>{movie.title}</p>
+      <p>{movie.synopsis}</p>
+      <p>{movie.releaseDate}</p>
+      {movie.genres.map((gender) => {
+        const key = `${movie.id}-${gender}`;
+        return <p key={key}>{gender}</p>;
+      })}
+    </article>
+  );
 };

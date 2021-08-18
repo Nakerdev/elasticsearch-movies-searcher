@@ -12,6 +12,7 @@ export default function Home() {
       <main className={styles.background}>
         <Searcher></Searcher>
       </main>
+      <div id="modal-root"></div>
     </>
   );
 }
