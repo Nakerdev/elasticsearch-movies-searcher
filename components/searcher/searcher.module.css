@@ -24,11 +24,6 @@
   border-radius: 10px;
 }
 
-.searchButton {
-  width: 30px;
-  margin-left: -40px;
-}
-
 .moviesSearchingResultContainer {
   width: 50%;
   max-height: 500px;

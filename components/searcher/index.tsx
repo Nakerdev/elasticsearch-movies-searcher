@@ -49,12 +49,6 @@ export class Searcher extends Component<{}, SearcherComponentState> {
               this.moviesSearchingCriteriaChangedEvent(event)
             }
           />
-          <input
-            type="image"
-            className={styles.searchButton}
-            src="/search.svg"
-            alt="a magnifying glass"
-          />
         </form>
         {this.state.movies.length > 0 ? (
           <MoviesList movies={this.state.movies} />
