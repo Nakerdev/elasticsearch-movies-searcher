@@ -1,13 +1,16 @@
 import styles from "./searcher.module.css";
 import { Children, Component } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { Movie } from "./../../pages/api/movies/movieRepository";
+import { AppContext } from "./../appProvider/index";
 
 interface SearcherComponentState {
   movies: Movie[];
 }
 
 export class Searcher extends Component<{}, SearcherComponentState> {
+
   constructor() {
     super({});
     this.state = {
@@ -98,17 +101,15 @@ type MovieCardProps = {
   movie: Movie;
 };
 
-const MovieCard = ({ movie }: MovieCardProps) => {
-  return (
+export const MovieCard = () => {
+    //const [state, dispatch] = React.useContext(AppContext);
+    //if(state.movieModal.isShown){
+return (
     <article>
-      <img src={movie.poster} alt={movie.title} />
-      <p>{movie.title}</p>
-      <p>{movie.synopsis}</p>
-      <p>{movie.releaseDate}</p>
-      {movie.genres.map((gender) => {
-        const key = `${movie.id}-${gender}`;
-        return <p key={key}>{gender}</p>;
-      })}
+      <img src="" alt="" />
+      <p>Titulo de la peli</p>
+      <p>Sinpsis</p>
+      <p>10/10/1990</p>
     </article>
   );
 };

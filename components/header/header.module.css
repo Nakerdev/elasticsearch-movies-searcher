@@ -6,8 +6,6 @@
   align-items: center;
   padding-left: 30px;
   padding-right: 30px;
-  position: absolute;
-  z-index: 1;
 }
 
 .title {

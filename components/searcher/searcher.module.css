@@ -12,7 +12,6 @@
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  z-index: 2;
 }
 
 .searchInput {
@@ -38,7 +37,6 @@
   padding-right: 10px;
   margin-left: 10px;
   margin-top: -10px;
-  z-index: 1;
 }
 
 .searchingResult {
