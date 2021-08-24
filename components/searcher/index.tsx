@@ -97,19 +97,4 @@ const MovieItem = ({ movie }: MovieItemProps) => {
   );
 };
 
-type MovieCardProps = {
-  movie: Movie;
-};
 
-export const MovieCard = () => {
-    //const [state, dispatch] = React.useContext(AppContext);
-    //if(state.movieModal.isShown){
-return (
-    <article>
-      <img src="" alt="" />
-      <p>Titulo de la peli</p>
-      <p>Sinpsis</p>
-      <p>10/10/1990</p>
-    </article>
-  );
-};
