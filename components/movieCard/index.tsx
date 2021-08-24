@@ -12,8 +12,8 @@ return (
         alt=""
         className={styles.movieCardImg}
     />
-    <div>
-        <p>Titulo de la peli</p>
+    <div className={styles.movieCardDetailsContainer}>
+        <p className={styles.movieCardTitle}>HARRY POTTER AND THE PHILOSOPHERS STONE</p>
         <p>Sinpsis</p>
         <p>10/10/1990</p>
     </div>

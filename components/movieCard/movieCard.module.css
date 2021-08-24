@@ -9,3 +9,15 @@
 .movieCardImg {
     width: 300px;
 }
+
+.movieCardDetailsContainer {
+    width: 100%;
+    margin: 0 20px;
+}
+
+.movieCardTitle {
+    font-size: 1.5rem;
+    line-height: 30px;
+    font-weight: bold;
+
+}
