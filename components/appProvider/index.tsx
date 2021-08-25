@@ -7,7 +7,14 @@ interface State {
 }
 
 const initialState: State = {
-  selectedMovie: undefined,
+  selectedMovie: new Movie(
+    "287947",
+    "Shazam!",
+    "https://image.tmdb.org/t/p/w500/xnopI5Xtky18MPhK40cZAGAOVeV.jpg",
+    "A boy is given the ability to become an adult superhero in times of need with a single magic word.",
+    1290193,
+    ["Action", "Comedy", "Fantasy"]
+  ),
 };
 
 enum ActionType {
@@ -65,13 +72,11 @@ export const AppContext = React.createContext<{
   dispatch: () => null,
 });
 
-export class AppProvider extends React.Component {
-  render() {
-    const [state, dispatch] = React.useReducer(reducer, initialState);
-    return (
-      <AppContext.Provider value={{ state, dispatch }}>
-        {this.props.children}
-      </AppContext.Provider>
-    );
-  }
-}
+export const AppProvider = ({ children }) => {
+  const [state, dispatch] = React.useReducer(reducer, initialState);
+  return (
+    <AppContext.Provider value={{ state, dispatch }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
