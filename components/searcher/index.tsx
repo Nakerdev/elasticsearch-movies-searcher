@@ -1,7 +1,6 @@
 import styles from "./searcher.module.css";
 import { Children, Component } from "react";
 import React from "react";
-import ReactDOM from "react-dom";
 import { Movie } from "./../../pages/api/movies/movieRepository";
 import { AppContext } from "./../appProvider/index";
 
@@ -10,7 +9,6 @@ interface SearcherComponentState {
 }
 
 export class Searcher extends Component<{}, SearcherComponentState> {
-
   constructor() {
     super({});
     this.state = {
@@ -27,11 +25,8 @@ export class Searcher extends Component<{}, SearcherComponentState> {
       const response = await fetch(
         `/api/movies?criteria=${moviesSearchingCriteria}`
       );
-      const jsonResponse = await response.json();
-      if (jsonResponse.length === 0) return;
-      const movies = jsonResponse.map((movie) =>
-        Object.assign(new Movie(), movie)
-      );
+      const movies: Movie[] = await response.json();
+      if (movies.length === 0) return;
       this.setState({ movies: movies });
     }
   }
@@ -83,18 +78,5 @@ type MovieItemProps = {
 };
 
 const MovieItem = ({ movie }: MovieItemProps) => {
-  function showMovieCardModal() {
-    const modalRoot = document.getElementById("modal-root");
-    ReactDOM.render(<MovieCard movie={movie} />, modalRoot);
-  }
-  return (
-    <button
-      className={styles.searchingResult}
-      onClick={() => showMovieCardModal()}
-    >
-      {movie.title}
-    </button>
-  );
+  return <button className={styles.searchingResult}>{movie.title}</button>;
 };
-
-

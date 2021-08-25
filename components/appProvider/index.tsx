@@ -1,49 +1,77 @@
 import React from "react";
 import { AppProps } from "next/app";
+import { Movie } from "./../../pages/api/movies/movieRepository";
 
 interface State {
-    movieModal: MovieModalState; 
-}
-
-class MovieModalSatate {
-    public isShown: bool;
-
-    constructor(isShown: bool){
-        this.isShown = isShown;
-    }
+  selectedMovie?: Movie;
 }
 
 const initialState: State = {
-    movieModal: new MovieModalSatate(false)
+  selectedMovie: undefined,
+};
+
+enum ActionType {
+  showMovie = 1,
+  hideMovie = 2,
 }
 
 interface Action {
-    type: string;
+  type: ActionType;
+}
+
+export class ShowMovieAction implements Action {
+  readonly type: ActionType;
+  readonly selectedMovie: Movie;
+
+  constructor(selectedMovie: Movie) {
+    this.type = ActionType.showMovie;
+    this.selectedMovie = selectedMovie;
+  }
+}
+
+export class HideMovieAction implements Action {
+  readonly type: ActionType;
+
+  constructor() {
+    this.type = ActionType.hideMovie;
+  }
 }
 
 function reducer(state: State, action: Action): State {
-    switch(action.type){
-        case "show_movie":
-            return {
-                ...state,
-                movieModal: new MovieModalSatate(true)
-            }
-        default:
-            return state;
+  switch (action.type) {
+    case ActionType.showMovie: {
+      const showMovieAction = action as ShowMovieAction;
+      return {
+        ...state,
+        selectedMovie: showMovieAction.selectedMovie,
+      };
     }
+    case ActionType.hideMovie: {
+      return {
+        ...state,
+        selectedMovie: undefined,
+      };
+    }
+    default:
+      return state;
+  }
 }
 
-export const AppContext = React.createContext({
-    state: initialState,
-    dispatch: () => null
+export const AppContext = React.createContext<{
+  state: State;
+  dispatch: React.Dispatch<Action>;
+}>({
+  state: initialState,
+  dispatch: () => null,
 });
 
-export const AppProvider = ({children}: AppProps ) => {
+export class AppProvider extends React.Component {
+  render() {
     const [state, dispatch] = React.useReducer(reducer, initialState);
-
     return (
-        <AppContext.Provider value={[ state, dispatch ]}>
-            { children }
-        </AppContext.Provider>
+      <AppContext.Provider value={{ state, dispatch }}>
+        {this.props.children}
+      </AppContext.Provider>
     );
+  }
 }
