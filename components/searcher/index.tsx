@@ -1,72 +1,40 @@
 import styles from "./searcher.module.css";
-import { Children, Component } from "react";
 import React from "react";
 import { Movie } from "./../../pages/api/movies/movieRepository";
-import { AppContext } from "./../appProvider/index";
+import {
+  AppContext,
+  ShowMovieAction,
+  SearchMoviesAction,
+} from "./../appProvider/index";
 
-interface SearcherComponentState {
-  movies: Movie[];
-}
-
-export class Searcher extends Component<{}, SearcherComponentState> {
-  constructor() {
-    super({});
-    this.state = {
-      movies: [],
-    };
-  }
-
-  async moviesSearchingCriteriaChangedEvent(
-    event: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const minCriteriaLenghtToFireTheSearch = 3;
-    const moviesSearchingCriteria = event.target.value;
-    if (moviesSearchingCriteria.length >= minCriteriaLenghtToFireTheSearch) {
-      const response = await fetch(
-        `/api/movies?criteria=${moviesSearchingCriteria}`
-      );
-      const movies: Movie[] = await response.json();
-      if (movies.length === 0) return;
-      this.setState({ movies: movies });
-    }
-  }
-
-  render() {
-    return (
-      <section className={styles.container}>
-        <form
-          className={styles.searcherContainer}
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <input
-            type="text"
-            className={styles.searchInput}
-            placeholder="The Movie name"
-            onChange={(event) =>
-              this.moviesSearchingCriteriaChangedEvent(event)
-            }
-          />
-        </form>
-        {this.state.movies.length > 0 ? (
-          <MoviesList movies={this.state.movies} />
-        ) : (
-          ""
-        )}
-      </section>
-    );
-  }
-}
-
-type MoviesListProps = {
-  movies: Movie[];
+export const Searcher = () => {
+  const { state, dispatch } = React.useContext(AppContext);
+  return (
+    <section className={styles.container}>
+      <form
+        className={styles.searcherContainer}
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <input
+          type="text"
+          className={styles.searchInput}
+          placeholder="The Movie name"
+          onChange={(event) =>
+            dispatch(new SearchMoviesAction(event.target.value, []))
+          }
+        />
+      </form>
+      <MoviesList />
+    </section>
+  );
 };
 
-const MoviesList = ({ movies }: MoviesListProps) => {
+const MoviesList = () => {
+  const { state, dispatch } = React.useContext(AppContext);
+  if (state.foundMovies.length == 0) return "";
   return (
     <div className={styles.moviesSearchingResultContainer}>
-      {movies.map((movie, index) => (
+      {state.foundMovies.map((movie, index) => (
         <MovieItem key={index} movie={movie}></MovieItem>
       ))}
     </div>
@@ -78,5 +46,13 @@ type MovieItemProps = {
 };
 
 const MovieItem = ({ movie }: MovieItemProps) => {
-  return <button className={styles.searchingResult}>{movie.title}</button>;
+  const { state, dispatch } = React.useContext(AppContext);
+  return (
+    <button
+      className={styles.searchingResult}
+      onClick={() => dispatch(new ShowMovieAction(movie))}
+    >
+      {movie.title}
+    </button>
+  );
 };
