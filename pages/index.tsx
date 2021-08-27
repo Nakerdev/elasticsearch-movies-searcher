@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Header } from "../components/header";
 import { Searcher } from "../components/searcher";
 import { MovieCard } from "../components/movieCard";
+import { colors } from "../styles/theme";
 
 export default function Home() {
   return (
@@ -14,6 +15,12 @@ export default function Home() {
         <Searcher></Searcher>
       </main>
       <MovieCard />
+      <style jsx>{`
+        main {
+            height: 100%;
+            background-color: ${colors.primary};
+        }
+      `}</style>
     </>
   );
 }

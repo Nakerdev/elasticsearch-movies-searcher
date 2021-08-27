@@ -10,11 +10,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     </AppProvider>
 <style jsx global>{`
 html,
-body {
-  padding: 0;
+      body,
+      body > div:first-child,
+      div#__next,
+      div#__next > div {
+        padding: 0;
   margin: 0;
-  height: 100%;
-}
+
+        height: 100%;
+      }
 
 a {
   color: inherit;
