@@ -1,4 +1,3 @@
-import styles from "./searcher.module.css";
 import React from "react";
 import { Movie } from "./../../pages/api/movies/movieRepository";
 import {
@@ -10,14 +9,10 @@ import {
 export const Searcher = () => {
   const { state, dispatch } = React.useContext(AppContext);
   return (
-    <section className={styles.container}>
-      <form
-        className={styles.searcherContainer}
-        onSubmit={(e) => e.preventDefault()}
-      >
+    <section>
+      <form onSubmit={(e) => e.preventDefault()}>
         <input
           type="text"
-          className={styles.searchInput}
           placeholder="The Movie name"
           onChange={(event) =>
             dispatch(new SearchMoviesAction(event.target.value, []))
@@ -33,7 +28,7 @@ const MoviesList = () => {
   const { state, dispatch } = React.useContext(AppContext);
   if (state.foundMovies.length == 0) return "";
   return (
-    <div className={styles.moviesSearchingResultContainer}>
+    <div className="moviesSearchingResultContainer">
       {state.foundMovies.map((movie, index) => (
         <MovieItem key={index} movie={movie}></MovieItem>
       ))}
@@ -49,7 +44,7 @@ const MovieItem = ({ movie }: MovieItemProps) => {
   const { state, dispatch } = React.useContext(AppContext);
   return (
     <button
-      className={styles.searchingResult}
+      className="searchingResult"
       onClick={() => dispatch(new ShowMovieAction(movie))}
     >
       {movie.title}
