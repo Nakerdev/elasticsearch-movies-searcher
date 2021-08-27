@@ -3,9 +3,12 @@ import { AppProvider } from "../components/appProvider/index";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
+      <>
     <AppProvider>
       <Component {...pageProps} />
-      <style jsx global>{`
+      
+    </AppProvider>
+<style jsx global>{`
 html,
 body {
   padding: 0;
@@ -46,7 +49,7 @@ h1 {
   font-family: Arial, sans-serif;
 }
       `}</style>
-    </AppProvider>
+      </>
   );
 }
 
