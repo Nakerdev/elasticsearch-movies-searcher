@@ -83,7 +83,7 @@ const MoviesList = ({movies}: MoviesListProps) => {
   );
 };
 
-type MovieItemProps = {
+interface MovieItemProps {
   movie: Movie;
 };
 
@@ -99,7 +99,6 @@ const MovieItem = ({ movie }: MovieItemProps) => {
             return <p key={key}>{gender}</p>;
           })}
         </div>
-
         <button onClick={() => dispatch(new ShowMovieAction(movie))}>
           DETAILS
         </button>
