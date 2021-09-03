@@ -38,7 +38,6 @@ export const Searcher = () => {
           align-items: center;
           justify-content: center;
           flex-direction: column;
-          background-color: ${colors.primary};
         }
 
         input {
@@ -76,7 +75,6 @@ const MoviesList = ({movies}: MoviesListProps) => {
           width: 90%;
           display: flex;
           flex-direction: column;
-          background-color: ${colors.primary};
         }
       `}</style>
     </>
@@ -120,7 +118,7 @@ const MovieItem = ({ movie }: MovieItemProps) => {
 
         button {
           border: none;
-          background-color: ${colors.red};
+          background-color: ${colors.secondary};
           padding: 10px 20px;
           color: ${colors.white};
           font-weight: bold;
@@ -135,7 +133,8 @@ const MovieItem = ({ movie }: MovieItemProps) => {
 
         .genres-container > p {
           font-size: 1rem;
-          background-color: ${colors.secondary};
+          background-color: ${colors.red};
+          color: ${colors.white};
           padding: 10px;
           margin: 0;
           border-radius: 999px;

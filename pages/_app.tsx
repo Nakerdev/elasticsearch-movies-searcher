@@ -1,5 +1,6 @@
 import { AppProps } from "next/app";
 import { AppProvider } from "../components/appProvider/index";
+import { colors } from "../styles/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -15,8 +16,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         div#__next > div {
           padding: 0;
           margin: 0;
-
           height: 100%;
+          background-color: ${colors.primary};
         }
 
         a {

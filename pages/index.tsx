@@ -18,7 +18,6 @@ export default function Home() {
       <style jsx>{`
         main {
             height: 100%;
-            background-color: ${colors.primary};
         }
       `}</style>
     </>
