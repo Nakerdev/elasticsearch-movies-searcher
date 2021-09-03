@@ -1,14 +1,23 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { colors } from "./../../styles/theme";
 import { Movie } from "./../../pages/api/movies/movieRepository";
+import { searchMovies } from "./moviesClient";
 import {
   AppContext,
-  ShowMovieAction,
-  SearchMoviesAction,
+  ShowMovieAction
 } from "./../appProvider/index";
 
 export const Searcher = () => {
-  const { state, dispatch } = React.useContext(AppContext);
+  
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [moviesSearchingCriteria, setmoviesSearchingCriteria] = useState("");
+
+  useEffect(() => {
+    searchMovies(moviesSearchingCriteria)
+    .then(foundMovies => setMovies(foundMovies))
+    .catch(_ => setMovies([]));
+  }, [moviesSearchingCriteria])
+
   return (
     <>
       <section>
@@ -16,12 +25,11 @@ export const Searcher = () => {
           <input
             type="text"
             placeholder="The Movie name"
-            onChange={(event) =>
-              dispatch(new SearchMoviesAction(event.target.value, []))
-            }
+            onChange={(e) => setmoviesSearchingCriteria(e.target.value)}
+            value={moviesSearchingCriteria}
           />
         </form>
-        <MoviesList />
+        <MoviesList movies={movies}/>
       </section>
       <style jsx>{`
         section {
@@ -42,19 +50,23 @@ export const Searcher = () => {
           min-width: 800px;
           height: 60px;
           margin-top: 20px;
+          outline: none;
         }
       `}</style>
     </>
   );
 };
 
-const MoviesList = () => {
-  const { state, dispatch } = React.useContext(AppContext);
-  if (state.foundMovies.length == 0) return "";
+interface MoviesListProps {
+  movies: Movie[];
+}
+
+const MoviesList = ({movies}: MoviesListProps) => {
+  if (movies.length == 0) return "";
   return (
     <>
       <div>
-        {state.foundMovies.map((movie, index) => (
+        {movies.map((movie, index) => (
           <MovieItem key={index} movie={movie}></MovieItem>
         ))}
       </div>
