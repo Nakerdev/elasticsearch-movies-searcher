@@ -124,6 +124,7 @@ const MovieItem = ({ movie }: MovieItemProps) => {
           font-weight: bold;
           border-radius: 10px;
           letter-spacing: 2px;
+          cursor: pointer;
         }
 
         .genres-container {

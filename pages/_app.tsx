@@ -12,8 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         html,
         body,
         body > div:first-child,
-        div#__next,
-        div#__next > div {
+        div#__next {
           padding: 0;
           margin: 0;
           height: 100%;
