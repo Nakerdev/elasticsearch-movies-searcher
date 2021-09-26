@@ -52,14 +52,24 @@ export default function moviesNodeFetchIndex(
   }
 
   async function searchBy(title: string): Promise<MovieDocumentSource[]> {
+    const elasticSearchQuery = {
+      query: {
+        match: {
+          title: {
+            query: title
+          }
+        }
+      }
+    }
     const httpRequest = {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(elasticSearchQuery)
     };
     const response = await fetch(
-      `${elasticSearchHost}/${indexName}/_search?q=title:${title}`,
+      `${elasticSearchHost}/${indexName}/_search`,
       httpRequest
     );
     const jsonResponse = await response.json();
